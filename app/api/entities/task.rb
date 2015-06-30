@@ -1,11 +1,11 @@
 module API
   module Entities
     class Task < Grape::Entity
-      format_with(:iso_timestamp) { |dt| dt.iso8601 unless dt.nil? }
+      format_with(:readable_date) { |dt| dt.strftime('%m/%d/%Y') unless dt.nil? }
 
       expose :id, :user_id, :title, :description
 
-      with_options(format_with: :iso_timestamp) do
+      with_options(format_with: :readable_date) do
         expose :due_date
         expose :complete_date
       end
