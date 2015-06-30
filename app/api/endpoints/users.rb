@@ -5,7 +5,6 @@ module API
 
       resource :users do
 
-        # add filters
         desc 'Return paginated list of users'
         paginate
         get do
@@ -73,8 +72,8 @@ module API
             params do
               requires :title, type: String, desc: 'Title of the task'
               requires :description, type: String, desc: 'Short description of the task'
-              optional :due_date, type: Date, desc: 'Date task needs to be completed'
-              optional :completed, type: Boolean, desc: 'Is the task already completed?'
+              optional :due_date, type: String, desc: 'Due date for task'
+              optional :complete_date, type: String, desc: 'Date task was completed'
             end
             post do
               task = Task.new(params)
