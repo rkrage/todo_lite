@@ -1,35 +1,94 @@
-module Endpoints
-  class Users < Grape::API
+module API
+  module Endpoints
+    class Users < Grape::API
+      include Grape::Kaminari
 
-    resource :users do
+      resource :users do
 
-      desc 'Return paginated list of users'
-      get do
-
-      end
-
-      route_param :id do
-        
-        desc 'Return a user'
+        # add filters
+        desc 'Return paginated list of users'
+        paginate
         get do
-
+          present paginate(User.all), with: API::Entities::User
         end
 
-        resource :tasks do
-        
-          desc 'Return paginated list of tasks for a user'
+        desc 'Create a new user'
+        params do
+          requires :email_address, type: String, desc: 'User email address'
+          requires :first_name, type: String, desc: 'User first name'
+          requires :last_name, type: String, desc: 'User last name'
+        end
+        post do
+          user = User.new(params)
+          if user.save
+            present user, with: API::Entities::User
+          else
+            # blow chunks
+          end
+        end
+
+        params do
+          requires :user_id, type: Integer, desc: 'User id'
+        end
+        route_param :user_id do
+
+          desc 'Return a user'
           get do
-
+            present User.find(params[:user_id]), with: API::Entities::User
           end
 
-          desc 'Create a task for a user'
-          post do
+          desc 'Update a user'
+          params do
+            optional :email_address, type: String, desc: 'User email address'
+            optional :first_name, type: String, desc: 'User first name'
+            optional :last_name, type: String, desc: 'User last name'
+          end
+          patch do
+            user = User.find(params.delete :user_id)
+            if user.update(params)
+              present user, with: API::Entities::User
+            else
+              # blow chunks
+            end
+          end
 
+          desc 'Delete a user'
+          delete do
+            User.find(params[:user_id]).destroy
+            body false
+          end
+
+          resource :tasks do
+
+            desc 'Return paginated list of tasks for a user'
+            paginate
+            params do
+              optional :completed, type: Boolean, desc: 'Filter by completion status'
+            end
+            get do
+              present paginate(User.find(params[:user_id]).tasks), with: API::Entities::Task
+            end
+
+            desc 'Create a task for a user'
+            params do
+              requires :title, type: String, desc: 'Title of the task'
+              requires :description, type: String, desc: 'Short description of the task'
+              optional :due_date, type: Date, desc: 'Date task needs to be completed'
+              optional :completed, type: Boolean, desc: 'Is the task already completed?'
+            end
+            post do
+              task = Task.new(params)
+              if task.save
+                present task, with: API::Entities::Task
+              else
+                # blow chunks
+              end
+            end
           end
         end
+
       end
 
     end
-
   end
 end

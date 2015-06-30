@@ -14,13 +14,14 @@
 ActiveRecord::Schema.define(version: 20150629160638) do
 
   create_table "tasks", force: :cascade do |t|
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-    t.string   "subject",                     null: false
-    t.string   "description",                 null: false
-    t.datetime "due_date",                    null: false
-    t.boolean  "completed",   default: false, null: false
-    t.integer  "user_id",                     null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.string   "title",                         null: false
+    t.string   "description",                   null: false
+    t.datetime "due_date"
+    t.datetime "complete_date"
+    t.boolean  "completed",     default: false, null: false
+    t.integer  "user_id",                       null: false
   end
 
   add_index "tasks", ["user_id"], name: "index_tasks_on_user_id"

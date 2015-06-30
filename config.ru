@@ -4,5 +4,5 @@ require './config/environment'
 use ActiveRecord::ConnectionAdapters::ConnectionManagement
 
 map '/api' do
-  run API
+  run API::Base
 end
