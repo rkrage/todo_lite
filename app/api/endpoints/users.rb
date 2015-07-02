@@ -22,7 +22,7 @@ module API
           if user.save
             present user, with: API::Entities::User
           else
-            # blow chunks
+            render_validation_error(user)
           end
         end
 
@@ -47,7 +47,7 @@ module API
             if user.update(params)
               present user, with: API::Entities::User
             else
-              # blow chunks
+              render_validation_error(user)
             end
           end
 
@@ -80,7 +80,7 @@ module API
               if task.save
                 present task, with: API::Entities::Task
               else
-                # blow chunks
+                render_validation_error(task)
               end
             end
           end

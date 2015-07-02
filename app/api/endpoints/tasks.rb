@@ -26,7 +26,7 @@ module API
             if task.update(params)
               present task, with: API::Entities::Task
             else
-              # blow chunks
+              render_validation_error(task)
             end
           end
 
@@ -45,7 +45,7 @@ module API
               if task.save
                 present task, with: API::Entities::Task
               else
-                # blow up
+                render_validation_error(task)
               end
             end
 
