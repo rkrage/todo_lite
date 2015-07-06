@@ -90,6 +90,7 @@ GEM
     netrc (0.10.3)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
+    pg (0.18.2)
     rack (1.6.4)
     rack-accept (0.4.5)
       rack (>= 0.4)
@@ -148,6 +149,7 @@ DEPENDENCIES
   grape-activerecord
   grape-entity
   grape-kaminari
+  pg
   rack (~> 1.6)
   rake
   require_all
