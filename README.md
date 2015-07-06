@@ -1,6 +1,6 @@
 # TODO Lite #
 
-Lightweight REST API for managing TODO lists. This is a Rack application using Grape, ActiveRecord (without rails), and SQLite.
+Lightweight REST API for managing TODO lists. This is a Rack application using Grape, ActiveRecord (without rails), and PostgreSQL.
 
 ### Running the app ###
 
