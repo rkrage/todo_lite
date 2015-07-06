@@ -10,3 +10,8 @@ gem 'sqlite3'
 gem 'rake'
 gem 'require_all'
 gem 'grape-kaminari'
+
+group :test do
+  gem 'airborne'
+  gem 'faker'
+end
