@@ -12,7 +12,7 @@ unless ENV['RACK_ENV'] == :production
   User.all.each do |user|
     due_date = [nil, Date.today, Date.tomorrow]
     complete_date = [nil, Date.today, Date.yesterday]
-    Random.rand(0..10).times do
+    Random.rand(1..10).times do
       Task.create({user_id: user.id,
                    title: Faker::Hacker.verb,
                    description: Faker::Hacker.say_something_smart,

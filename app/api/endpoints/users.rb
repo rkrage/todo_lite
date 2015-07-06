@@ -62,10 +62,17 @@ module API
             desc 'Return paginated list of tasks for a user'
             paginate
             params do
-              optional :completed, type: Boolean, desc: 'Filter by completion status'
+              optional :complete, type: Boolean, desc: 'Filter by completion status'
             end
             get do
-              present paginate(User.find(params[:user_id]).tasks), with: API::Entities::Task
+              tasks = User.find(params[:user_id]).tasks
+              if params[:complete]
+                tasks = tasks.complete
+              else
+                # by default show incomplete tasks
+                tasks = tasks.incomplete
+              end
+              present paginate(tasks), with: API::Entities::Task
             end
 
             desc 'Create a task for a user'
